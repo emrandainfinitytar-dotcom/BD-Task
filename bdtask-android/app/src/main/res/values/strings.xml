@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BD Task</string>
+    <string name="launching">Launching Orbita…</string>
+    <string name="orbita_not_found">GoLogin Orbita not installed. Please install it from gologin.com</string>
+</resources>
