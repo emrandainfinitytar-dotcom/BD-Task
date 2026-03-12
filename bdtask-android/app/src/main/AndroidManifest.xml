@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        android:maxSdkVersion="29" />
+
+    <queries>
+        <!-- Allow launching GoLogin / Orbita -->
+        <package android:name="com.gologin.orbita" />
+        <package android:name="com.gologin.android" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="orbita" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="gologin" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BDTask"
+        android:usesCleartextTraffic="false"
+        android:hardwareAccelerated="true"
+        android:networkSecurityConfig="@xml/network_security_config">
+
+        <!-- ─── Main WebView Activity ─────────────────────────── -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ─── Deep Link Handler Activity ───────────────────── -->
+        <!-- Handles: bdtask://launch?profile=...&url=...&proxy=...&ua=... -->
+        <activity
+            android:name=".LaunchActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.BDTask.Splash">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Custom scheme deep link -->
+                <data android:scheme="bdtask" android:host="launch" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- HTTPS App Link -->
+                <data
+                    android:scheme="https"
+                    android:host="bdtask.online"
+                    android:pathPrefix="/app/launch" />
+            </intent-filter>
+        </activity>
+
+        <!-- ─── Splash Screen ────────────────────────────────── -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BDTask.Splash"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
